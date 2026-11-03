@@ -3,7 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Benny — Web Designer & Developer</title>
+  <title>Benny Wambua | Data Infrastructure & Backend Engineer</title>
+  <meta name="description" content="Data infrastructure and backend engineer in Nairobi. Async Python ingestion, runtime schema validation, and local OLAP pipelines on DuckDB, Polars, and dbt. Founder of Forge Digital Solutions.">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Benny Wambua — Data Infrastructure & Backend Engineer">
+  <meta property="og:description" content="Async Python ingestion, runtime schema validation, and local OLAP pipelines on DuckDB, Polars, and dbt.">
+  <meta property="og:url" content="https://benwam.vercel.app">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230a0a0a'/%3E%3Ctext x='32' y='44' font-size='30' font-weight='700' text-anchor='middle' fill='%238b7cf6' font-family='Arial'%3EBW%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;900&family=Epilogue:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
@@ -12,11 +20,11 @@
     :root {
       --bg: #0a0a0a; --surface: #111;
       --purple: #8b7cf6; --purple-dim: #2e2850; --purple-mid: #534AB7;
-      --text: #e8e4dc; --muted: #555250; --line: rgba(255,255,255,0.06);
+      --text: #e8e4dc; --muted: #8a8680; --line: rgba(255,255,255,0.06);
       --font-head: 'Barlow Condensed', sans-serif;
       --font-body: 'Epilogue', sans-serif;
     }
-    html { overflow-x: hidden; scroll-behavior: smooth; }
+    html { overflow-x: hidden; }
     body {
       font-family: var(--font-body);
       background: var(--bg);
@@ -24,9 +32,8 @@
       font-size: 14px;
       line-height: 1.6;
       overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
     }
-    
+
     @media (pointer: fine) {
       body { cursor: none; }
     }
@@ -37,16 +44,16 @@
     #loader-label { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); padding-bottom: 1rem; }
     #loader-bar { position: absolute; bottom: 0; left: 0; height: 2px; background: var(--purple); width: 0%; }
 
-    #cursor-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--purple); position: fixed; pointer-events: none; z-index: 9998; top: 0; left: 0; display: none; }
-    #cursor-ring { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(139,124,246,0.5); position: fixed; pointer-events: none; z-index: 9997; top: 0; left: 0; display: none; }
-    
+    #cursor-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--purple); position: fixed; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s, background 0.2s; display: none; }
+    #cursor-ring { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(139,124,246,0.5); position: fixed; pointer-events: none; z-index: 9997; transform: translate(-50%, -50%); display: none; }
+
     @media (pointer: fine) {
       #cursor-dot, #cursor-ring { display: block; }
     }
     body.cursor-hover #cursor-dot { width: 48px; height: 48px; background: var(--purple); mix-blend-mode: difference; }
     body.cursor-hover #cursor-ring { opacity: 0; }
 
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 500; display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2.5rem; transition: background 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease; border-bottom: 1px solid transparent; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 500; display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2.5rem; mix-blend-mode: normal; }
     .nav-logo { font-family: var(--font-head); font-weight: 900; font-size: 22px; letter-spacing: 0.06em; color: var(--text); text-decoration: none; text-transform: uppercase; }
     .nav-links { display: flex; gap: 2.5rem; list-style: none; }
     .nav-link { color: var(--muted); text-decoration: none; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; position: relative; overflow: hidden; display: inline-block; }
@@ -56,19 +63,20 @@
     .nav-link:hover::after { transform: translateY(-100%); }
 
     #hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 2.5rem 4rem; position: relative; border-bottom: 1px solid var(--line); }
-    .hero-eyebrow { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--purple); margin-bottom: 1.5rem; opacity: 0; transform: translateY(15px); }
-    .hero-title { font-family: var(--font-head); font-weight: 900; font-size: clamp(80px, 14vw, 175px); line-height: 0.88; text-transform: uppercase; letter-spacing: -0.02em; overflow: hidden; margin-bottom: 1rem; }
+    .hero-eyebrow { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--purple); margin-bottom: 1.5rem; opacity: 0; }
+    .hero-title { font-family: var(--font-head); font-weight: 900; font-size: clamp(80px, 14vw, 175px); line-height: 0.88; text-transform: uppercase; letter-spacing: -0.02em; overflow: hidden; }
     .hero-title .line { overflow: hidden; display: block; }
     .hero-title .line-inner { display: block; transform: translateY(110%); }
     .hero-title .purple { color: var(--purple); }
+    .hero-title .lc { text-transform: lowercase; }
 
-    .hero-bottom { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 2.5rem; opacity: 0; transform: translateY(20px); }
-    .hero-desc { max-width: 380px; color: #8a8680; font-size: 14px; line-height: 1.8; }
+    .hero-bottom { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 3.5rem; opacity: 0; }
+    .hero-desc { max-width: 380px; color: var(--muted); font-size: 14px; line-height: 1.8; }
     .hero-scroll-hint { display: flex; align-items: center; gap: 10px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
     .scroll-line { width: 48px; height: 1px; background: var(--muted); transform-origin: left; animation: scrollline 2s ease-in-out infinite; }
     @keyframes scrollline { 0%,100%{transform:scaleX(1)} 50%{transform:scaleX(0.4)} }
 
-    .status-pill { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line); padding: 6px 14px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); background: rgba(255,255,255,0.02); }
+    .status-pill { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line); padding: 6px 14px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
     .status-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; animation: pulse 2s infinite; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
@@ -84,9 +92,9 @@
     .about-heading .char { display: inline-block; }
     .about-bg-text { position: absolute; bottom: -2rem; left: -1rem; font-family: var(--font-head); font-weight: 900; font-size: 200px; line-height: 1; color: rgba(139,124,246,0.03); text-transform: uppercase; letter-spacing: -0.04em; user-select: none; pointer-events: none; white-space: nowrap; }
     .about-right { padding: 6rem 2.5rem; display: flex; flex-direction: column; justify-content: space-between; }
-    .about-text { color: #8a8680; font-size: 15px; line-height: 1.9; }
+    .about-text { color: var(--muted); font-size: 15px; line-height: 1.9; }
     .about-text p + p { margin-top: 1.1rem; }
-    .about-facts { display: flex; flex-direction: column; margin-top: 3rem; }
+    .about-facts { display: flex; flex-direction: column; }
     .fact-row { display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 0; border-top: 1px solid var(--line); font-size: 13px; overflow: hidden; }
     .fact-key { color: var(--muted); }
     .fact-val { color: var(--text); }
@@ -103,17 +111,18 @@
     .proj-num { font-family: var(--font-head); font-size: 36px; font-weight: 300; color: var(--muted); transition: color 0.3s; }
     .project-item:hover .proj-num { color: var(--purple); }
     .proj-name { font-family: var(--font-head); font-weight: 700; font-size: clamp(28px, 4vw, 48px); text-transform: uppercase; letter-spacing: 0.01em; transition: color 0.3s; line-height: 1; }
-    .proj-sub { font-size: 12px; color: var(--muted); margin-top: 6px; transition: color 0.3s; max-width: 600px; }
-    .project-item:hover .proj-sub { color: #9390a8; }
+    .proj-sub { font-size: 12px; color: var(--muted); margin-top: 6px; transition: color 0.3s; max-width: 560px; }
+    .project-item:hover .proj-sub { color: #b4b1c4; }
     .proj-right { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
     .proj-tags { display: flex; gap: 6px; }
-    .proj-tag { font-size: 11px; letter-spacing: 0.06em; color: var(--purple); border: 1px solid var(--purple-dim); padding: 3px 10px; background: rgba(139,124,246,0.03); }
+    .proj-tag { font-size: 11px; letter-spacing: 0.06em; color: var(--purple); border: 1px solid var(--purple-dim); padding: 3px 10px; }
     .proj-arrow { font-size: 22px; color: var(--muted); transition: color 0.3s, transform 0.3s; display: block; }
     .project-item:hover .proj-arrow { color: var(--purple); transform: translate(4px, -4px); }
+    .projects-group { padding: 1rem 2.5rem; border-bottom: 1px solid var(--line); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--purple); }
 
-    #project-preview { position: fixed; width: 280px; height: 180px; pointer-events: none; z-index: 800; overflow: hidden; opacity: 0; transform: scale(0.85) rotate(-3deg); transition: opacity 0.3s ease, transform 0.3s ease; top: 0; left: 0; border: 1px solid var(--line); box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
+    #project-preview { position: fixed; width: 280px; height: 180px; pointer-events: none; z-index: 800; overflow: hidden; opacity: 0; transform: scale(0.85) rotate(-3deg); transition: opacity 0.3s ease, transform 0.3s ease; }
     #project-preview.visible { opacity: 1; transform: scale(1) rotate(0deg); }
-    #project-preview .preview-inner { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-family: var(--font-head); font-weight: 700; font-size: 24px; text-transform: uppercase; letter-spacing: 0.06em; }
+    #project-preview .preview-inner { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-family: var(--font-head); font-weight: 700; font-size: 22px; text-transform: uppercase; letter-spacing: 0.06em; }
 
     #skills { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--line); min-height: 70vh; }
     .skills-left { padding: 5rem 2.5rem; border-right: 1px solid var(--line); display: flex; flex-direction: column; justify-content: space-between; }
@@ -121,16 +130,14 @@
     .skills-big .purple { color: var(--purple); }
     .skills-right { padding: 5rem 2.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem 2rem; align-content: start; }
     .skill-group-title { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--purple); margin-bottom: 1.25rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--purple-dim); }
-    .skill-entry { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid var(--line); font-size: 13px; color: var(--text); overflow: hidden; }
-    .skill-bar { width: 44px; height: 2px; background: var(--purple-dim); position: relative; }
-    .skill-fill { position: absolute; left: 0; top: 0; height: 100%; background: var(--purple); transform: scaleX(0); transform-origin: left; }
+    .skill-entry { padding: 0.5rem 0; border-bottom: 1px solid var(--line); font-size: 13px; color: var(--text); overflow: hidden; }
 
     #contact { border-bottom: 1px solid var(--line); }
     .contact-top { padding: 6rem 2.5rem 3rem; text-align: center; position: relative; overflow: hidden; }
     .contact-big { font-family: var(--font-head); font-weight: 900; font-size: clamp(60px, 12vw, 150px); text-transform: uppercase; letter-spacing: -0.02em; line-height: 0.9; }
     .contact-big .purple { color: var(--purple); }
     .contact-sub { color: var(--muted); font-size: 14px; margin-top: 1.5rem; line-height: 1.8; }
-    .contact-links { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); }
+    .contact-links { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); }
     .contact-link { display: block; padding: 2.5rem 2.5rem; border-right: 1px solid var(--line); text-decoration: none; color: var(--text); position: relative; overflow: hidden; transition: color 0.3s; }
     .contact-link:last-child { border-right: none; }
     .contact-link::before { content: ''; position: absolute; inset: 0; background: var(--purple); transform: translateY(100%); transition: transform 0.5s cubic-bezier(0.76,0,0.24,1); }
@@ -138,40 +145,47 @@
     .contact-link:hover { color: #fff; }
     .contact-link > * { position: relative; z-index: 1; }
     .c-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; transition: color 0.3s; }
-    .contact-link:hover .c-label { color: rgba(255,255,255,0.6); }
+    .contact-link:hover .c-label { color: rgba(255,255,255,0.7); }
     .c-val { font-family: var(--font-head); font-size: 20px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
-    .c-arrow { margin-top: 2rem; display: block; font-size: 22px; transition: transform 0.3s; color: var(--muted); }
-    .contact-link:hover .c-arrow { transform: translate(6px, -6px); color: #fff; }
+    .c-arrow { margin-top: 2rem; display: block; font-size: 22px; transition: transform 0.3s; }
+    .contact-link:hover .c-arrow { transform: translate(6px, -6px); }
 
-    footer { display: flex; justify-content: space-between; align-items: center; padding: 2rem 2.5rem; font-size: 12px; color: var(--muted); letter-spacing: 0.06em; }
+    footer { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2.5rem; font-size: 12px; color: var(--muted); letter-spacing: 0.06em; }
 
     .magnetic { display: inline-block; }
     @media (pointer: fine) { .magnetic { cursor: none; } }
 
-    #progress { position: fixed; top: 0; left: 0; height: 2px; background: var(--purple); z-index: 9000; width: 100%; transform-origin: left; transform: scaleX(0); will-change: transform; }
+    #progress { position: fixed; top: 0; left: 0; height: 2px; background: var(--purple); z-index: 9000; transform-origin: left; transform: scaleX(0); }
+
+    /* Fallbacks: if GSAP fails to load or JS is off, content stays visible. */
+    .no-gsap #loader { display: none; }
+    .no-gsap .hero-title .line-inner { transform: none; }
+    .no-gsap .hero-eyebrow, .no-gsap .hero-bottom { opacity: 1; }
 
     @media (max-width: 900px) {
       #about, #skills { grid-template-columns: 1fr; }
-      .about-left, .skills-left { border-right: none; border-bottom: 1px solid var(--line); padding: 4rem 2.5rem; }
-      .about-right, .skills-right { padding: 4rem 2.5rem; }
-      .contact-links { grid-template-columns: 1fr; }
-      .contact-link { border-right: none; border-bottom: 1px solid var(--line); padding: 2rem 2.5rem; }
-      .contact-link:last-child { border-bottom: none; }
+      .about-left, .skills-left { border-right: none; border-bottom: 1px solid var(--line); }
+      .contact-links { grid-template-columns: 1fr 1fr; }
+      .contact-link:nth-child(2) { border-right: none; }
+      .contact-link:nth-child(1), .contact-link:nth-child(2) { border-bottom: 1px solid var(--line); }
     }
     @media (max-width: 600px) {
-      .project-item { grid-template-columns: 1fr; gap: 1rem; padding: 2rem 1.5rem; }
+      .project-item { grid-template-columns: 1fr; gap: 1rem; }
       .proj-num { display: none; }
-      .proj-right { align-items: flex-start; margin-top: 0.5rem; }
-      nav { padding: 1.2rem 1.5rem; }
-      .nav-links { gap: 1.2rem; }
-      #hero { padding: 0 1.5rem 3rem; }
-      .hero-bottom { flex-direction: column; align-items: flex-start; gap: 2rem; }
-      .hero-bottom > div { width: 100%; align-items: flex-start !important; }
-      .projects-header { padding: 1.5rem; }
-      .about-left, .about-right, .skills-left, .skills-right, .contact-top { padding: 4rem 1.5rem; }
-      footer { padding: 2rem 1.5rem; flex-direction: column; gap: 0.75rem; text-align: center; }
+      .proj-right { align-items: flex-start; }
+      .contact-links { grid-template-columns: 1fr; }
+      .contact-link { border-right: none !important; border-bottom: 1px solid var(--line); }
+      nav { padding: 1rem; }
+      .nav-links { gap: 1rem; }
     }
   </style>
+  <noscript>
+    <style>
+      #loader { display: none; }
+      .hero-title .line-inner { transform: none; }
+      .hero-eyebrow, .hero-bottom { opacity: 1; }
+    </style>
+  </noscript>
 </head>
 <body>
 <div id="loader">
@@ -196,22 +210,22 @@
   <ul class="nav-links">
     <li><a href="#about" class="nav-link" data-text="About"><span>About</span></a></li>
     <li><a href="#projects" class="nav-link" data-text="Work"><span>Work</span></a></li>
-    <li><a href="#skills" class="nav-link" data-text="Skills"><span>Skills</span></a></li>
+    <li><a href="#skills" class="nav-link" data-text="Stack"><span>Stack</span></a></li>
     <li><a href="#contact" class="nav-link" data-text="Contact"><span>Contact</span></a></li>
   </ul>
 </nav>
 
 <section id="hero">
-  <div class="hero-eyebrow">Web Designer & Developer — Nairobi, Kenya</div>
+  <div class="hero-eyebrow">Data Infrastructure & Backend Engineer — Nairobi, Kenya</div>
   <h1 class="hero-title">
-    <span class="line"><span class="line-inner">Building</span></span>
-    <span class="line"><span class="line-inner">Websites</span></span>
-    <span class="line"><span class="line-inner purple">That Convert.</span></span>
+    <span class="line"><span class="line-inner">Data Pipelines.</span></span>
+    <span class="line"><span class="line-inner">Async Backends.</span></span>
+    <span class="line"><span class="line-inner purple">Production UI<span class="lc">s</span>.</span></span>
   </h1>
   <div class="hero-bottom">
-    <p class="hero-desc">I design and build websites that drive real business results. Founder of Forge Digital Solutions. Sharp eye, clean code, zero excuses.</p>
+    <p class="hero-desc">Async Python ingestion, schema validation, and local OLAP pipelines on DuckDB and Polars, plus the web interfaces on top. Founder of Forge Digital Solutions.</p>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:1.5rem">
-      <div class="status-pill"><span class="status-dot"></span> Available for work</div>
+      <div class="status-pill"><span class="status-dot"></span> Open to work</div>
       <div class="hero-scroll-hint"><span class="scroll-line"></span> Scroll</div>
     </div>
   </div>
@@ -219,18 +233,20 @@
 
 <div class="marquee-section">
   <div class="marquee-track">
-    <span class="marquee-item">Web Design</span><span class="marquee-item marquee-sep">✦</span>
-    <span class="marquee-item">Brand Identity</span><span class="marquee-item marquee-sep">✦</span>
-    <span class="marquee-item">Frontend Dev</span><span class="marquee-item marquee-sep">✦</span>
-    <span class="marquee-item">Nairobi, Kenya</span><span class="marquee-item marquee-sep">✦</span>
+    <span class="marquee-item">Data Infrastructure</span><span class="marquee-item marquee-sep">✦</span>
+    <span class="marquee-item">Async Backend</span><span class="marquee-item marquee-sep">✦</span>
+    <span class="marquee-item">DuckDB</span><span class="marquee-item marquee-sep">✦</span>
+    <span class="marquee-item">Polars</span><span class="marquee-item marquee-sep">✦</span>
+    <span class="marquee-item">dbt</span><span class="marquee-item marquee-sep">✦</span>
+    <span class="marquee-item">Next.js</span><span class="marquee-item marquee-sep">✦</span>
     <span class="marquee-item">Forge Digital</span><span class="marquee-item marquee-sep">✦</span>
-    <span class="marquee-item">Open to Work</span><span class="marquee-item marquee-sep">✦</span>
-    <span class="marquee-item">Web Design</span><span class="marquee-item marquee-sep">✦</span>
-    <span class="marquee-item">Brand Identity</span><span class="marquee-item marquee-sep">✦</span>
-    <span class="marquee-item">Frontend Dev</span><span class="marquee-item marquee-sep">✦</span>
-    <span class="marquee-item">Nairobi, Kenya</span><span class="marquee-item marquee-sep">✦</span>
+    <span class="marquee-item">Data Infrastructure</span><span class="marquee-item marquee-sep">✦</span>
+    <span class="marquee-item">Async Backend</span><span class="marquee-item marquee-sep">✦</span>
+    <span class="marquee-item">DuckDB</span><span class="marquee-item marquee-sep">✦</span>
+    <span class="marquee-item">Polars</span><span class="marquee-item marquee-sep">✦</span>
+    <span class="marquee-item">dbt</span><span class="marquee-item marquee-sep">✦</span>
+    <span class="marquee-item">Next.js</span><span class="marquee-item marquee-sep">✦</span>
     <span class="marquee-item">Forge Digital</span><span class="marquee-item marquee-sep">✦</span>
-    <span class="marquee-item">Open to Work</span><span class="marquee-item marquee-sep">✦</span>
   </div>
 </div>
 
@@ -239,26 +255,26 @@
     <div>
       <div class="section-label" style="margin-bottom:2rem">01 — About</div>
       <h2 class="about-heading">
-        Design.<br><span style="color:var(--purple)">Code.</span><br>Ship.
+        Ingest.<br><span style="color:var(--purple)">Validate.</span><br>Ship.
       </h2>
     </div>
     <div class="about-bg-text">BW</div>
     <div class="about-facts">
       <div class="fact-row"><span class="fact-key">Location</span><span class="fact-val">Nairobi, KE</span></div>
-      <div class="fact-row"><span class="fact-key">Company</span><span class="fact-val">Forge Digital Solutions</span></div>
-      <div class="fact-row"><span class="fact-key">Focus</span><span class="fact-val">Web design & frontend</span></div>
-      <div class="fact-row"><span class="fact-key">Next</span><span class="fact-val">ALX Data Analytics — Sep 2026</span></div>
-      <div class="fact-row"><span class="fact-key">Status</span><span class="fact-val" style="color:#4ade80">Open to freelance</span></div>
+      <div class="fact-row"><span class="fact-key">Role</span><span class="fact-val">Data infrastructure & backend</span></div>
+      <div class="fact-row"><span class="fact-key">Studio</span><span class="fact-val">Forge Digital Solutions</span></div>
+      <div class="fact-row"><span class="fact-key">Core stack</span><span class="fact-val">Python, DuckDB, Polars, dbt</span></div>
+      <div class="fact-row"><span class="fact-key">Status</span><span class="fact-val" style="color:#4ade80">Open to work</span></div>
     </div>
   </div>
   <div class="about-right">
     <div class="section-label" style="text-align:right">Nairobi / 2026</div>
     <div class="about-text">
-      <p>I'm Benny. A designer and developer who builds websites that actually work. I started Forge Digital Solutions to give businesses in Nairobi access to quality web design without the agency nonsense.</p>
-      <p>I care about the details others skip: typography that breathes, interactions that feel right, code that doesn't fall apart at 2am. Currently expanding into data analytics and sharpening my frontend stack.</p>
-      <p>If you need something built properly — I'm your person.</p>
+      <p>I'm Benny, a data infrastructure and backend engineer in Nairobi. I build async Python ingestion, runtime schema validation, and local OLAP pipelines on DuckDB, Polars, and dbt.</p>
+      <p>I also run Forge Digital Solutions, a studio that designs and ships websites for local and international clients. That covers component architecture, design, and deployment on Vercel, so I can take a data system from ingestion to a usable interface.</p>
+      <p>Code for the systems below is on GitHub.</p>
     </div>
-    <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem">
+    <div style="display:flex;gap:1rem;flex-wrap:wrap">
       <a href="#contact" class="magnetic" style="display:inline-block;font-family:var(--font-head);font-weight:700;font-size:15px;letter-spacing:0.1em;text-transform:uppercase;color:var(--bg);background:var(--purple);padding:14px 32px;text-decoration:none;transition:opacity 0.2s">Get in touch →</a>
       <a href="#projects" class="magnetic" style="display:inline-block;font-family:var(--font-head);font-weight:600;font-size:15px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text);border:1px solid var(--line);padding:14px 32px;text-decoration:none;transition:border-color 0.2s">See work</a>
     </div>
@@ -268,14 +284,115 @@
 <section id="projects">
   <div class="projects-header">
     <span class="section-label">02 — Selected Work</span>
-    <span class="section-label">2 projects</span>
+    <span class="section-label">8 projects</span>
   </div>
-  
-  <a href="https://flo-nbo.vercel.app" target="_blank" class="project-item" data-color="#111116" data-preview="FLO">
+
+  <div class="projects-group">Data &amp; backend systems</div>
+
+  <a href="https://github.com/BenWam254/async-cdc-engine" target="_blank" rel="noopener" class="project-item" data-color="#111116" data-preview="CDC">
     <div class="proj-num">01</div>
     <div class="proj-body">
+      <div class="proj-name">async-cdc-engine</div>
+      <div class="proj-sub">AsyncIO listener that parses CDC log events and applies state mutations without blocking the event loop.</div>
+    </div>
+    <div class="proj-right">
+      <div class="proj-tags">
+        <span class="proj-tag">Python</span>
+        <span class="proj-tag">AsyncIO</span>
+        <span class="proj-tag">CDC</span>
+      </div>
+      <span class="proj-arrow">↗</span>
+    </div>
+  </a>
+
+  <a href="https://github.com/BenWam254/schema-guard" target="_blank" rel="noopener" class="project-item" data-color="#0f0f14" data-preview="GUARD">
+    <div class="proj-num">02</div>
+    <div class="proj-body">
+      <div class="proj-name">schema-guard</div>
+      <div class="proj-sub">Runtime validation of incoming JSON against structural contracts before anything reaches storage.</div>
+    </div>
+    <div class="proj-right">
+      <div class="proj-tags">
+        <span class="proj-tag">Python</span>
+        <span class="proj-tag">JSON</span>
+        <span class="proj-tag">Contracts</span>
+      </div>
+      <span class="proj-arrow">↗</span>
+    </div>
+  </a>
+
+  <a href="https://github.com/BenWam254/data-stream-pipeline" target="_blank" rel="noopener" class="project-item" data-color="#101015" data-preview="STREAM">
+    <div class="proj-num">03</div>
+    <div class="proj-body">
+      <div class="proj-name">data-stream-pipeline</div>
+      <div class="proj-sub">Multi-stage stream processor: FastAPI ingress, Polars LazyFrame transforms, DuckDB sinks.</div>
+    </div>
+    <div class="proj-right">
+      <div class="proj-tags">
+        <span class="proj-tag">FastAPI</span>
+        <span class="proj-tag">Polars</span>
+        <span class="proj-tag">DuckDB</span>
+      </div>
+      <span class="proj-arrow">↗</span>
+    </div>
+  </a>
+
+  <a href="https://github.com/BenWam254/analytics-dbt-duckdb" target="_blank" rel="noopener" class="project-item" data-color="#0e0e13" data-preview="DBT">
+    <div class="proj-num">04</div>
+    <div class="proj-body">
+      <div class="proj-name">analytics-dbt-duckdb</div>
+      <div class="proj-sub">In-process OLAP modeling with dbt-duckdb. No warehouse server, no network hop.</div>
+    </div>
+    <div class="proj-right">
+      <div class="proj-tags">
+        <span class="proj-tag">dbt</span>
+        <span class="proj-tag">DuckDB</span>
+        <span class="proj-tag">SQL</span>
+      </div>
+      <span class="proj-arrow">↗</span>
+    </div>
+  </a>
+
+  <div class="projects-group">Interfaces for data systems</div>
+
+  <a href="https://contract-lab-chi.vercel.app/" target="_blank" rel="noopener" class="project-item" data-color="#0f0f14" data-preview="LAB">
+    <div class="proj-num">05</div>
+    <div class="proj-body">
+      <div class="proj-name">Contract Lab</div>
+      <div class="proj-sub">Live demo. Browser tool that validates JSON payloads against a JSON Schema subset and diffs two contract versions. Zero runtime dependencies in the core; large payloads run in a Web Worker.</div>
+    </div>
+    <div class="proj-right">
+      <div class="proj-tags">
+        <span class="proj-tag">Next.js</span>
+        <span class="proj-tag">TypeScript</span>
+        <span class="proj-tag">Web Worker</span>
+      </div>
+      <span class="proj-arrow">↗</span>
+    </div>
+  </a>
+
+  <a href="https://github.com/BenWam254/data-ops-dashboard" target="_blank" rel="noopener" class="project-item" data-color="#101015" data-preview="OPS">
+    <div class="proj-num">06</div>
+    <div class="proj-body">
+      <div class="proj-name">data-ops-dashboard</div>
+      <div class="proj-sub">Pipeline health, latency tracking, and monitoring UI for the systems above.</div>
+    </div>
+    <div class="proj-right">
+      <div class="proj-tags">
+        <span class="proj-tag">Monitoring</span>
+        <span class="proj-tag">Dashboard</span>
+      </div>
+      <span class="proj-arrow">↗</span>
+    </div>
+  </a>
+
+  <div class="projects-group">Studio work (Forge Digital Solutions)</div>
+
+  <a href="https://flo-nbo.vercel.app" target="_blank" rel="noopener" class="project-item" data-color="#111116" data-preview="FLO">
+    <div class="proj-num">07</div>
+    <div class="proj-body">
       <div class="proj-name">Flo</div>
-      <div class="proj-sub">SaaS project management application for creative teams featuring dynamic pricing states and automated timelines.</div>
+      <div class="proj-sub">Project management app for creative teams: dynamic pricing states and automated timelines.</div>
     </div>
     <div class="proj-right">
       <div class="proj-tags">
@@ -286,12 +403,12 @@
       <span class="proj-arrow">↗</span>
     </div>
   </a>
-  
-  <a href="https://zuri-nbo.vercel.app" target="_blank" class="project-item" data-color="#080808" data-preview="ZURI">
-    <div class="proj-num">02</div>
+
+  <a href="https://zuri-nbo.vercel.app" target="_blank" rel="noopener" class="project-item" data-color="#080808" data-preview="ZURI">
+    <div class="proj-num">08</div>
     <div class="proj-body">
       <div class="proj-name">Zuri</div>
-      <div class="proj-sub">Premium hospitality fine dining interface with smooth interactive menu datasets and luxury typography.</div>
+      <div class="proj-sub">Fine dining restaurant site with an interactive menu, GSAP animation, and custom typography.</div>
     </div>
     <div class="proj-right">
       <div class="proj-tags">
@@ -306,35 +423,37 @@
 
 <section id="skills">
   <div class="skills-left">
-    <div class="section-label">03 — Skills</div>
-    <h2 class="skills-big">What I<br>bring<br>to the<br><span class="purple">table.</span></h2>
+    <div class="section-label">03 — Stack</div>
+    <h2 class="skills-big">What I<br>build<br>with<span class="purple">.</span></h2>
   </div>
   <div class="skills-right">
     <div>
-      <div class="skill-group-title">Design</div>
-      <div class="skill-entry">UI Design<div class="skill-bar"><div class="skill-fill" style="--w:0.9"></div></div></div>
-      <div class="skill-entry">Brand Identity<div class="skill-bar"><div class="skill-fill" style="--w:0.85"></div></div></div>
-      <div class="skill-entry">Typography<div class="skill-bar"><div class="skill-fill" style="--w:0.82"></div></div></div>
-      <div class="skill-entry">Digital Art<div class="skill-bar"><div class="skill-fill" style="--w:0.6"></div></div></div>
+      <div class="skill-group-title">Data &amp; Backend</div>
+      <div class="skill-entry">Python 3.11+</div>
+      <div class="skill-entry">AsyncIO</div>
+      <div class="skill-entry">FastAPI</div>
+      <div class="skill-entry">Crawl4AI</div>
     </div>
     <div>
-      <div class="skill-group-title">Development</div>
-      <div class="skill-entry">HTML & CSS<div class="skill-bar"><div class="skill-fill" style="--w:0.92"></div></div></div>
-      <div class="skill-entry">JavaScript<div class="skill-bar"><div class="skill-fill" style="--w:0.65"></div></div></div>
-      <div class="skill-entry">Responsive<div class="skill-bar"><div class="skill-fill" style="--w:0.88"></div></div></div>
-      <div class="skill-entry">Git<div class="skill-bar"><div class="skill-fill" style="--w:0.6"></div></div></div>
+      <div class="skill-group-title">Analytical Engines</div>
+      <div class="skill-entry">DuckDB</div>
+      <div class="skill-entry">Polars</div>
+      <div class="skill-entry">dbt-core</div>
+      <div class="skill-entry">PostgreSQL, SQLite</div>
     </div>
     <div>
-      <div class="skill-group-title">Business</div>
-      <div class="skill-entry">Client Pitching<div class="skill-bar"><div class="skill-fill" style="--w:0.85"></div></div></div>
-      <div class="skill-entry">Freelance Ops<div class="skill-bar"><div class="skill-fill" style="--w:0.8"></div></div></div>
-      <div class="skill-entry">Pricing<div class="skill-bar"><div class="skill-fill" style="--w:0.72"></div></div></div>
+      <div class="skill-group-title">Infrastructure</div>
+      <div class="skill-entry">Docker, Docker Compose</div>
+      <div class="skill-entry">Git</div>
+      <div class="skill-entry">WSL (Ubuntu)</div>
+      <div class="skill-entry">Vercel</div>
     </div>
     <div>
-      <div class="skill-group-title">Learning</div>
-      <div class="skill-entry">Data Analytics<div class="skill-bar"><div class="skill-fill" style="--w:0.3"></div></div></div>
-      <div class="skill-entry">Odin Project<div class="skill-bar"><div class="skill-fill" style="--w:0.45"></div></div></div>
-      <div class="skill-entry">Anki / SRS<div class="skill-bar"><div class="skill-fill" style="--w:0.55"></div></div></div>
+      <div class="skill-group-title">Frontend &amp; Design</div>
+      <div class="skill-entry">TypeScript, JavaScript</div>
+      <div class="skill-entry">Next.js, React</div>
+      <div class="skill-entry">Tailwind CSS, GSAP</div>
+      <div class="skill-entry">UI and brand design</div>
     </div>
   </div>
 </section>
@@ -343,9 +462,9 @@
   <div class="contact-top">
     <div class="section-label" style="text-align:center;margin-bottom:2rem">04 — Contact</div>
     <h2 class="contact-big">
-      Let's<br><span class="purple">Work.</span>
+      Let's<br><span class="purple">Talk.</span>
     </h2>
-    <p class="contact-sub">Open to freelance, long-term clients, and collabs.<br>Based in Nairobi — remote-friendly.</p>
+    <p class="contact-sub">Open to Octernships, engineering roles, and freelance work.<br>Based in Nairobi — remote-friendly.</p>
   </div>
   <div class="contact-links">
     <a href="mailto:wambuabenny69@gmail.com" class="contact-link magnetic">
@@ -353,14 +472,20 @@
       <div class="c-val">Email me</div>
       <span class="c-arrow">↗</span>
     </a>
-    
-    <a href="https://github.com/Wambululu871" target="_blank" class="contact-link magnetic">
+
+    <a href="https://github.com/BenWam254" target="_blank" rel="noopener" class="contact-link magnetic">
       <div class="c-label">GitHub</div>
-      <div class="c-val">GitHub</div>
+      <div class="c-val">BenWam254</div>
       <span class="c-arrow">↗</span>
     </a>
-    
-    <a href="https://wa.me/254113392613" target="_blank" class="contact-link magnetic">
+
+    <a href="https://www.linkedin.com/in/wambua-benny007/" target="_blank" rel="noopener" class="contact-link magnetic">
+      <div class="c-label">LinkedIn</div>
+      <div class="c-val">LinkedIn</div>
+      <span class="c-arrow">↗</span>
+    </a>
+
+    <a href="https://wa.me/254113392613" target="_blank" rel="noopener" class="contact-link magnetic">
       <div class="c-label">WhatsApp</div>
       <div class="c-val">WhatsApp me</div>
       <span class="c-arrow">↗</span>
@@ -376,31 +501,33 @@
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script>
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+    document.documentElement.classList.add('no-gsap');
+  }
+</script>
 
 <script>
+if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
 gsap.registerPlugin(ScrollTrigger);
 
 const isFinePointer = window.matchMedia("(pointer: fine)").matches;
 
-// ── CUSTOM CURSOR ENGINE ─────────────────────────────────────
 if (isFinePointer) {
   const dot = document.getElementById('cursor-dot');
   const ring = document.getElementById('cursor-ring');
   let mx = 0, my = 0, rx = 0, ry = 0;
 
-  // Center alignment offset fixes
-  gsap.set(dot, { xPercent: -50, yPercent: -50 });
-  gsap.set(ring, { xPercent: -50, yPercent: -50 });
-
   document.addEventListener('mousemove', e => {
     mx = e.clientX; my = e.clientY;
-    gsap.to(dot, { x: mx, y: my, duration: 0.05, ease: 'none' });
+    gsap.to(dot, { x: mx, y: my, duration: 0.08, ease: 'none' });
   });
 
   function animateRing() {
-    rx += (mx - rx) * 0.15;
-    ry += (my - ry) * 0.15;
-    gsap.set(ring, { x: rx, y: ry });
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
     requestAnimationFrame(animateRing);
   }
   animateRing();
@@ -411,7 +538,6 @@ if (isFinePointer) {
   });
 }
 
-// ── MAGNETIC INTERACTION ENGINE ──────────────────────────────
 if (isFinePointer) {
   document.querySelectorAll('.magnetic').forEach(el => {
     el.addEventListener('mousemove', function(e) {
@@ -428,15 +554,15 @@ if (isFinePointer) {
   });
 }
 
-// ── WORKSPACE LOADER ORCHESTRATION ───────────────────────────
 const loader = document.getElementById('loader');
 const countEl = document.getElementById('loader-count');
 const barEl = document.getElementById('loader-bar');
-const hasVisited = sessionStorage.getItem('forgePortfolioVisited');
+let hasVisited = null;
+try { hasVisited = sessionStorage.getItem('forgePortfolioVisited'); } catch (e) {}
 
 if (!hasVisited) {
-  sessionStorage.setItem('forgePortfolioVisited', 'true');
-  
+  try { sessionStorage.setItem('forgePortfolioVisited', 'true'); } catch (e) {}
+
   const tl = gsap.timeline({
     onComplete: () => {
       gsap.to(loader, {
@@ -454,7 +580,7 @@ if (!hasVisited) {
   const counter = { val: 0 };
   tl.to(counter, {
     val: 100,
-    duration: 1.8,
+    duration: 1.2,
     ease: 'power1.inOut',
     onUpdate: function() {
       countEl.textContent = Math.round(counter.val);
@@ -463,7 +589,7 @@ if (!hasVisited) {
   });
 } else {
   loader.style.display = 'none';
-  window.addEventListener('DOMContentLoaded', revealHero);
+  revealHero();
 }
 
 function revealHero() {
@@ -475,46 +601,41 @@ function revealHero() {
       ease: 'power4.out',
       stagger: 0.12
     })
-    .to('.hero-eyebrow', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.5')
-    .to('.hero-bottom', { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, '-=0.4');
+    .to('.hero-eyebrow', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.4')
+    .to('.hero-bottom', { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, '-=0.3');
 }
 
-// ── GLOBAL SCROLL PROGRESS TRACKER ───────────────────────────
 const prog = document.getElementById('progress');
 window.addEventListener('scroll', () => {
-  const s = document.documentElement.scrollTop || document.body.scrollTop;
+  const s = document.documentElement.scrollTop;
   const h = document.documentElement.scrollHeight - window.innerHeight;
-  if (h > 0) {
-    prog.style.transform = 'scaleX(' + (s / h) + ')';
-  }
+  prog.style.transform = 'scaleX(' + (s / h) + ')';
 });
 
-// ── SECTION SCROLL REVEALS ───────────────────────────────────
 gsap.from('#about .about-heading', {
-  scrollTrigger: { trigger: '#about', start: 'top 75%' },
+  scrollTrigger: { trigger: '#about', start: 'top 70%' },
   y: 60, opacity: 0, duration: 1, ease: 'power3.out'
 });
 
 gsap.from('.fact-row', {
-  scrollTrigger: { trigger: '.about-facts', start: 'top 85%' },
-  y: 25, opacity: 0, stagger: 0.08, duration: 0.6, ease: 'power2.out'
+  scrollTrigger: { trigger: '.about-facts', start: 'top 80%' },
+  y: 20, opacity: 0, stagger: 0.08, duration: 0.6, ease: 'power2.out'
 });
 
-gsap.from('.about-text p', {
-  scrollTrigger: { trigger: '.about-text', start: 'top 85%' },
-  y: 30, opacity: 0, stagger: 0.1, duration: 0.9, ease: 'power2.out'
+gsap.from('.about-text', {
+  scrollTrigger: { trigger: '.about-text', start: 'top 80%' },
+  y: 30, opacity: 0, duration: 0.9, ease: 'power2.out'
 });
 
 document.querySelectorAll('.project-item').forEach((item, i) => {
   gsap.from(item, {
-    scrollTrigger: { trigger: item, start: 'top 90%' },
+    scrollTrigger: { trigger: item, start: 'top 85%' },
     x: -40, opacity: 0,
     duration: 0.8,
     ease: 'power3.out'
   });
 });
 
-// ── FLOATING PROJECT PREVIEW CANVAS ──────────────────────────
 if (isFinePointer) {
   const preview = document.getElementById('project-preview');
   const previewInner = document.getElementById('preview-inner');
@@ -534,62 +655,46 @@ if (isFinePointer) {
     });
     item.addEventListener('mousemove', e => {
       gsap.to(preview, {
-        left: e.clientX + 25,
+        left: e.clientX + 20,
         top: e.clientY - 90,
-        duration: 0.3,
+        duration: 0.4,
         ease: 'power2.out'
       });
     });
   });
 }
 
-// ── COMPUTE CUSTOM INLINE VARIABLE PROGRESS BARS ─────────────
-ScrollTrigger.create({
-  trigger: '#skills',
-  start: 'top 75%',
-  onEnter: () => {
-    document.querySelectorAll('.skill-fill').forEach(fill => {
-      const w = parseFloat(fill.style.getPropertyValue('--w')) || 0.7;
-      gsap.to(fill, { scaleX: w, duration: 1.5, ease: 'power3.out', delay: Math.random() * 0.2 });
-    });
-  }
-});
-
 gsap.from('.skills-big', {
-  scrollTrigger: { trigger: '#skills', start: 'top 75%' },
+  scrollTrigger: { trigger: '#skills', start: 'top 70%' },
   y: 50, opacity: 0, duration: 1, ease: 'power3.out'
 });
 
+gsap.from('.skill-entry', {
+  scrollTrigger: { trigger: '.skills-right', start: 'top 80%' },
+  y: 16, opacity: 0, stagger: 0.04, duration: 0.5, ease: 'power2.out'
+});
+
 gsap.from('.contact-big', {
-  scrollTrigger: { trigger: '#contact', start: 'top 75%' },
+  scrollTrigger: { trigger: '#contact', start: 'top 70%' },
   y: 80, opacity: 0, duration: 1.1, ease: 'power3.out'
 });
 
 gsap.from('.contact-link', {
-  scrollTrigger: { trigger: '.contact-links', start: 'top 90%' },
-  y: 40, opacity: 0, stagger: 0.1, duration: 0.7, ease: 'power2.out'
+  scrollTrigger: { trigger: '.contact-links', start: 'top 85%' },
+  y: 30, opacity: 0, stagger: 0.1, duration: 0.7, ease: 'power2.out'
 });
 
-// ── NAVBAR SCROLL BLUR APPARATUS ─────────────────────────────
-const mainNav = document.getElementById('main-nav');
+const nav = document.getElementById('main-nav');
 ScrollTrigger.create({
-  start: 'top -40px',
+  start: 'top -80px',
   onUpdate: self => {
-    if (self.progress > 0) {
-      mainNav.style.borderBottom = '1px solid var(--line)';
-      mainNav.style.background = 'rgba(10,10,10,0.85)';
-      mainNav.style.backdropFilter = 'blur(16px)';
-      mainNav.style.webkitBackdropFilter = 'blur(16px)';
-    } else {
-      mainNav.style.borderBottom = '1px solid transparent';
-      mainNav.style.background = 'transparent';
-      mainNav.style.backdropFilter = 'none';
-      mainNav.style.webkitBackdropFilter = 'none';
-    }
+    nav.style.borderBottom = self.progress > 0 ? '1px solid rgba(255,255,255,0.06)' : 'none';
+    nav.style.background = self.progress > 0 ? 'rgba(10,10,10,0.9)' : 'transparent';
+    nav.style.backdropFilter = self.progress > 0 ? 'blur(12px)' : 'none';
+    nav.style.webkitBackdropFilter = self.progress > 0 ? 'blur(12px)' : 'none';
   }
 });
 
-// ── HERO PARALLAX DECAY ──────────────────────────────────────
 gsap.to('.hero-title', {
   scrollTrigger: {
     trigger: '#hero',
@@ -597,9 +702,9 @@ gsap.to('.hero-title', {
     end: 'bottom top',
     scrub: true
   },
-  y: -80,
-  ease: 'none'
+  y: -100
 });
+}
 </script>
 </body>
 </html>
